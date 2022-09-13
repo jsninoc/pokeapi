@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
+import "./styles/App.css";
 import Layout from "./layout/Layout";
 import Home from "./pages/Home";
 import PokemonDetail from "./pages/PokemonDetail";

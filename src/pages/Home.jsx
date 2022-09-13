@@ -44,7 +44,7 @@ const Home = () => {
           <Loader />
         )
         : (
-          <div className='grid grid-cols-2 gap-4 w-full'>
+          <div className='grid grid-cols-2 gap-4 w-full md:grid-cols-4'>
             {pokemons.map(pokemon => (
               <PokemonCard pokemon={pokemon} key={pokemon.id} />
             ))}
