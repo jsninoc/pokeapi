@@ -17,6 +17,7 @@ const PokemonDetail = () => {
 
   const getPokemonDetail = useCallback(async () => {
     try {
+      setIsLoading(true);
       const data = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
       setPokemon(data.data);
       
@@ -30,6 +31,8 @@ const PokemonDetail = () => {
       });
       setStats(statsArray);
     } catch (error) {
+      setPokemon();
+      setStats();
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -40,12 +43,13 @@ const PokemonDetail = () => {
     getPokemonDetail();
 
     return () => {
-      setStats([])
+      setPokemon()
+      setStats();
     }
   }, [getPokemonDetail]);
 
   useEffect(() => {
-    if(pokemon) {
+    if(pokemon && stats) {
       const chartRoot = am5.Root.new("chartdiv");
       chartRoot.setThemes([am5themes_Animated.new(chartRoot)]);
 
@@ -113,9 +117,7 @@ const PokemonDetail = () => {
  
   return (
     <div className='flex flex-col items-center py-6 w-11/12 relative'>
-      { isLoading && (<Loader />) }
-
-      { !isLoading && (
+      { !isLoading && pokemon ? (
         <>
           <h1 className='text-3xl text-center text-primary-blue capitalize'>{ pokemon.name }</h1>
           <h2 className='text-2xl text-center text-primary-blue mb-4'># { pokemon.id }</h2>
@@ -149,7 +151,18 @@ const PokemonDetail = () => {
           <h2 className='text-2xl text-center text-primary-blue mt-4'>Stats</h2>
           <div id='chartdiv' className='w-full h-[30vh] md:w-1/2 md:h-[40vh]'></div>
         </>
-      ) }
+      )
+      : isLoading && !pokemon ? (
+        <Loader />
+      )
+
+      : !isLoading && !pokemon && (
+        <>
+          <h1 className='text-center text-2xl text-primary-blue'>Oops...</h1>
+          <h2 className='text-center text-xl text-primary-blue'>There is no pokemon with that name</h2>
+        </>
+      )
+      }
     </div>
   );
 };

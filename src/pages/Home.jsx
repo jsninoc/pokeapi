@@ -39,7 +39,7 @@ const Home = () => {
 
   return (
     <div className='flex flex-col items-center py-6 w-11/12 relative'>
-      <h1 className='text-2xl mb-4'>Top 10 Pokemon</h1>
+      <h1 className='text-2xl mb-4'>First 10 Pokemon</h1>
         {isLoading ? (
           <Loader />
         )
