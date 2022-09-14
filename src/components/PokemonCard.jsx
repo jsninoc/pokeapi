@@ -8,7 +8,7 @@ const PokemonCard = ({ pokemon }) => {
       <p className='text-white text-center capitalize mb-2'>{ pokemon.name }</p>
       <Link to={`/pokemon/${pokemon.id}`}>
         <div className='bg-secondary-yellow p-2 rounded-full'>
-          <p className='text-primary-blue text-center'>Ver detalle</p>
+          <p className='text-primary-blue text-center'>See details</p>
         </div>
       </Link>
     </div>
