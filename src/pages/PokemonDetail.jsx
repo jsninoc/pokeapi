@@ -1,12 +1,16 @@
-import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import * as am5 from "@amcharts/amcharts5";
 import * as am5radar from "@amcharts/amcharts5/radar";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 
 import Loader from '../components/Loader';
+import useFavorites from '../hooks/useFavorites';
 
 const PokemonDetail = () => {
 
@@ -14,6 +18,8 @@ const PokemonDetail = () => {
   const [pokemon, setPokemon] = useState();
   const [stats, setStats] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { favorites, updateFavorites } = useFavorites();
 
   const getPokemonDetail = useCallback(async () => {
     try {
@@ -114,6 +120,16 @@ const PokemonDetail = () => {
       }
     }
   }, [pokemon, stats]);
+
+  const addFavorite = () => {
+    const obj = {
+      id: pokemon.id,
+      name: pokemon.name,
+      img: pokemon.sprites.front_default
+    }
+
+    updateFavorites(obj);
+  }
  
   return (
     <div className='flex flex-col items-center py-6 w-11/12 relative'>
@@ -150,6 +166,10 @@ const PokemonDetail = () => {
 
           <h2 className='text-2xl text-center text-primary-blue mt-4'>Stats</h2>
           <div id='chartdiv' className='w-full h-[30vh] md:w-1/2 md:h-[40vh]'></div>
+
+          <button className='fixed bottom-12 right-4 bg-primary-yellow w-12 h-12 box-border rounded-full flex flex-col items-center justify-center' onClick={ addFavorite }>
+            <FontAwesomeIcon icon={ favorites.filter(favorite => favorite.id === pokemon.id).length > 0 ? faHeart : faHeartRegular } className="text-primary-blue text-2xl" />
+          </button>
         </>
       )
       : isLoading && !pokemon ? (
