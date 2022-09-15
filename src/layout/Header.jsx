@@ -27,10 +27,10 @@ const Header = () => {
         </Link>
       </div>
 
-      <form onSubmit={onSubmit} className='flex items-center w-full md:w-auto' ref={formRef}>
+      <form data-testid="search-form" onSubmit={onSubmit} className='flex items-center w-full md:w-auto' ref={formRef}>
         <div className='relative w-full'>
-          <input type="text" className='w-full focus:outline-none pl-4 py-2 pr-8' placeholder='Type Pokemon name' required onChange={e => setSearchText(e.target.value)} />
-          <button className='absolute top-1/2 transform -translate-y-1/2 right-2'>
+          <input type="text" className='w-full focus:outline-none pl-4 py-2 pr-8' data-testid="search-input" placeholder='Type Pokemon name' required onChange={e => setSearchText(e.target.value)} />
+          <button data-testid="btn-submit" className='absolute top-1/2 transform -translate-y-1/2 right-2'>
             <FontAwesomeIcon className='text-gray-400' icon={faMagnifyingGlass} />
           </button>
         </div>
